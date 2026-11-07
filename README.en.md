@@ -2,74 +2,89 @@
 
 # Society Scheduler
 
-### Bookings, weekly recurrence and local reminders with React Native and Expo
+**Booking management for a small-sided football venue, built with React Native, Expo and TypeScript.**
 
-[Português](README.md) · [Architecture](docs/architecture.md) · [Engineering decisions](docs/engineering-decisions.md) · [Technical challenges](docs/technical-challenges.md) · [Testing and delivery](docs/testing-and-delivery.md)
+[Português](README.md) · [My contributions](#my-contributions) · [Architecture](#architecture) · [LinkedIn](https://www.linkedin.com/in/gustavo-santana-83ba611a6/)
 
-Society Scheduler is a booking management app for a small-sided football venue: it brings together an agenda, availability checks, weekly reservations, booking confirmation and data backups. Its engineering challenges include detecting recurring conflicts without a fixed annual horizon, keeping reminders consistent with operating-system requests and restoring older data formats.
+An agenda for checking availability, managing weekly bookings and tracking confirmations. The app combines local persistence, on-device reminders and data backups, addressing scheduling conflicts, compatibility across data versions and consistency between application state and the operating system.
 
-## Demo
+## See the app
 
-![Screen tour assembled from three sanitized web captures](assets/demo.gif)
+<a href="assets/demo.gif"><img src="assets/demo.gif" width="280" alt="Screen tour of the agenda, booking form and backup"></a>
 
-Real captures from a sanitized **web preview at 390 × 844 CSS pixels**, using fictitious teams. The GIF is a tour of these screens, not an interaction recording or a native release demo. [Media provenance](assets/README.md)
+*Tour of three real web-preview captures with fictitious data. The GIF presents screens; it is not an interaction recording or a native release.*
 
-| Agenda | Booking form | Backup |
+<details>
+<summary>View the three screens in detail</summary>
+
+| Agenda | New booking | Backup |
 | --- | --- | --- |
-| ![Agenda with fictitious teams](assets/screenshots/agenda.png) | ![Booking form with fictitious data](assets/screenshots/create.png) | ![Backup screen with synthetic record count](assets/screenshots/backup.png) |
+| ![Agenda with fictitious teams](assets/screenshots/agenda.png) | ![Booking form with fictitious data](assets/screenshots/create.png) | ![Backup with demonstration records](assets/screenshots/backup.png) |
 
-## My Contributions
+Captured at 390 × 844 CSS pixels. [Media provenance and scope](assets/README.md).
 
-The Git history attributes contributions to **Gustavo** in the following areas:
+</details>
 
-- **SDK and dependencies:** updates to the Expo/React Native foundation and project configuration.
-- **Backup and restoration:** evolution of import/export workflows and compatibility with legacy formats.
-- **Scheduling rules:** fixes for recurring conflicts and booking interval boundaries.
-- **Local notifications:** native request reconciliation and operation serialization to handle missing or duplicate reminders.
-- **Automated tests:** checks for scheduling rules, backups and notification coordination.
+## Features
 
-**Codex was used to assist development.** This list describes Git-attributed contributions; it does not claim sole authorship of the application or establish how each implementation was divided between people and agents. [Contribution evidence](docs/evidence.md#e09--attribution)
+- **Agenda and availability:** daily and weekly navigation, a monthly calendar, search and filters.
+- **Recurring bookings:** weekly reservations with per-date exclusions and overlap checks per field.
+- **Confirmation and reminders:** booking status tracking and local notification coordination.
+- **Backup and restoration:** JSON import/export, legacy-format compatibility and confirmation before replacing data.
 
-## Architecture at a glance
+## My contributions
 
-React Native screens → domain helpers and Zustand → AsyncStorage. Expo Notifications reconciles local reminders with operating-system requests; platform file APIs handle manual JSON backup transfer. No business backend or remote synchronization was identified. [Architecture details](docs/architecture.md)
+Maintenance contributions attributed to **Gustavo** in the project history:
 
-![Conceptual application architecture](assets/architecture.png)
+- **SDK and dependency updates**, including Expo/React Native configuration.
+- **Backup and restoration improvements**, including import/export and legacy-format handling.
+- **Scheduling rule fixes**, including recurring conflicts and booking interval boundaries.
+- **Notification reconciliation**, with operation serialization and handling of missing or duplicate requests.
+- **Automated tests** for scheduling rules, backups and notification coordination.
 
-## Three technical decisions
+Development was **assisted by Codex**. The [contribution record](docs/evidence.md#e09--attribution) details the evidence and attribution scope without claiming sole authorship of the application.
 
-- **Recurring availability:** explicit comparisons between one-off and weekly reservations avoid a fixed annual conflict-checking horizon and respect resource identity and excluded occurrences. [E03](docs/evidence.md)
-- **Reminder reconciliation:** application state is compared with pending operating-system notification requests; valid requests are reused, duplicates are cancelled, and effects are serialized. [E04](docs/evidence.md)
-- **Data evolution:** versioned backup import normalizes legacy records and removes device-specific notification metadata before rebuilding local reminders. [E05](docs/evidence.md)
+## Architecture
 
-Hydration guards and explicit replacement confirmation also protect restoration from acting on its initial empty state. [E02, E05](docs/evidence.md)
+Screens use domain rules and Zustand actions; AsyncStorage persists local state. A notification module coordinates operating-system requests, while platform file APIs support manual backup transfer between installations.
 
-## Technology stack
+![Architecture: React Native screens, domain rules, Zustand, AsyncStorage, notifications and files](assets/architecture.png)
 
-| Area | Applied technologies |
+The app keeps data on the device. No business backend or remote synchronization was identified. [Components and data flows](docs/architecture.md).
+
+## Three engineering decisions
+
+| Challenge | Implemented solution | Why it matters |
+| --- | --- | --- |
+| Conflicts between weekly bookings | Compare recurrence, field and intervals without a fixed annual horizon | Avoids restricting conflict detection to an arbitrary window of weeks |
+| Local state differs from system reminders | Reconcile pending requests and serialize native effects | Enables valid reminders to be reused, duplicates to be cancelled and missing requests to be recreated |
+| Older data on another installation | Normalize versioned backups and strip device notification identifiers | Preserves compatibility and allows reminders to be rebuilt at the destination |
+
+Reminders schedule the next eligible occurrence and are renewed through app activity. Restoration waits for state hydration and requires replacement confirmation. [Decisions and trade-offs](docs/engineering-decisions.md).
+
+## Applied technologies
+
+| Area | Technologies |
 | --- | --- |
-| Mobile foundation | React Native 0.86.3, React 19.2.3, Expo 57.0.26 |
-| Language and navigation | TypeScript 6.0.3; React Navigation native stack and bottom tabs |
-| State and persistence | Zustand 4.0.0; AsyncStorage 2.2.0 |
-| UI | styled-components, Expo Vector Icons, Safe Area Context, Size Matters |
-| Rules and validation | date-fns; Yup with additional domain validation |
-| Platform integrations | Expo Notifications, FileSystem, DocumentPicker, Sharing and Updates |
-| Quality and packaging | Node test runner through tsx, ESLint, Bun and EAS configuration |
+| Mobile application | React Native, Expo, React, TypeScript |
+| State and persistence | Zustand, AsyncStorage |
+| Navigation and UI | React Navigation, styled-components, Safe Area Context |
+| Dates and validation | date-fns, Yup and TypeScript domain rules |
+| Native integrations | Expo Notifications, FileSystem, DocumentPicker, Sharing and Updates |
+| Tests and tooling | Node test runner, tsx, ESLint, Bun and EAS configuration |
 
-Versions identify the inspected local installation, not proof of a successful native release. Reanimated is declared in the project but is not presented here as an implemented animation feature. No business API client or backend implementation was identified. [E00, E06, E08](docs/evidence.md)
-
-## Technical challenges
-
-The deeper case studies cover recurring conflict detection, reconciling native reminders, preserving legacy backups, ordering hydration and destructive restore operations, and adapting file workflows across platforms. Each explains the implementation, observable benefit and remaining limitation. [Read the five challenges](docs/technical-challenges.md)
+[Inspected versions and usage evidence](docs/evidence.md#e00--technology-versions).
 
 ## Testing and quality
 
-The review on **7 November 2026** recorded **36 passing tests** and TypeScript checking with no errors. The suite covers scheduling rules, backups and notification coordination through simulated operations.
+The review on **7 November 2026** recorded **36 passing tests** and **TypeScript checking with no errors**. The suite covers scheduling rules, backups and notification coordination through simulated operations.
 
-ESLint findings and an observed web-preview runtime error remain open; full results, limitations and outstanding native validation are documented in [Testing, quality and delivery](docs/testing-and-delivery.md). These checks do not establish production readiness.
+ESLint findings and an observed web-preview runtime error remain open. Full results and outstanding native validation are documented in [Testing, quality and delivery](docs/testing-and-delivery.md); the checks performed do not establish production readiness.
 
-## About this showcase
+Further reading: [five engineering challenges](docs/technical-challenges.md) · [evidence register](docs/evidence.md).
 
-Society Scheduler is an editorial name. The source code and original brand remain private; this repository contains only documentation and sanitized media, with publication authorized. [Disclosure scope](docs/disclosure.md)
+## About this repository
 
-Connect with Gustavo on [LinkedIn](https://www.linkedin.com/in/gustavo-santana-83ba611a6/).
+This is the public showcase of an application with private source code. **Society Scheduler** is its portfolio presentation name. The repository contains documentation and sanitized images, with no application source code or installable package. [Public material scope](docs/disclosure.md).
+
+**Gustavo** · [Professional profile on LinkedIn](https://www.linkedin.com/in/gustavo-santana-83ba611a6/)
