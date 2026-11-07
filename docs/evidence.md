@@ -48,7 +48,9 @@ This case study was prepared from private source at revision `404d8ca` on **7 No
 
 Maintenance diffs under Gustavo include `a84b2e3` (SDK/config updates), `ea2fd20` (backup workflow), `d705b88` (rules, reconciliation and tests), `dab1bdd` (slot-boundary correction) and `d15ab7c` (backup/project setup evolution). Earlier application/recurrence/notification implementation appears under the historical alias. Names, commit attribution and branch/tool references do not establish sole intellectual ownership. Private planning documents show an agent-assisted workflow and external visual references; the exact division of work remains unknown.
 
-**Requires confirmation:** identity mapping, professional name, actual dates/responsibilities, collaborators, assistance tools and ownership of earlier implementation/design. This register does not attribute the entire project to the portfolio owner.
+**Owner-confirmed:** Codex was used to assist development. This confirmation does not establish exclusive use of Codex or the allocation of individual implementation tasks between people and agents.
+
+**Requires confirmation:** identity mapping, professional name, actual dates/responsibilities, collaborators, other assistance tools and ownership of earlier implementation/design. This register does not attribute the entire project to the portfolio owner.
 
 ## E10 — Performance scope
 
