@@ -1,6 +1,6 @@
 # Evidence register
 
-[Back to the overview](../README.md)
+[English overview](../README.en.md) · [Visão geral em português](../README.md)
 
 This case study was prepared from private source at revision `404d8ca` on **7 November 2026**. References below name private artifacts without reproducing their contents or linking to private infrastructure. Readers cannot inspect the private implementation through this documentation repository. Executed checks are point-in-time observations, not ongoing CI badges.
 

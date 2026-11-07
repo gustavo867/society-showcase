@@ -2,82 +2,82 @@
 
 # Society Scheduler
 
-### React Native engineering case study · iOS and Android targets
+### Estudo de engenharia React Native · alvos iOS e Android
 
-[Português](README.pt-BR.md) · [Architecture](docs/architecture.md) · [Engineering decisions](docs/engineering-decisions.md) · [Technical challenges](docs/technical-challenges.md) · [Testing and delivery](docs/testing-and-delivery.md)
+[English](README.en.md) · [Arquitetura](docs/architecture.md) · [Decisões](docs/engineering-decisions.md) · [Desafios](docs/technical-challenges.md) · [Testes e entrega](docs/testing-and-delivery.md)
 
-Society Scheduler is an editorial name for a private application that manages reservations for a small-sided football venue. This documentation-only showcase explains the engineering behind its local data model, recurring bookings and native reminders. The original brand and implementation remain private.
+Society Scheduler é um nome editorial para um aplicativo privado de gestão de reservas de um society. Este showcase documental apresenta a engenharia do modelo local, das reservas recorrentes e dos lembretes nativos. A marca original e a implementação permanecem privadas.
 
-## Architecture at a glance
+## Arquitetura em resumo
 
-React Native screens → domain helpers and Zustand → AsyncStorage. Expo Notifications reconciles local reminders with operating-system requests; platform file APIs handle manual JSON backup transfer. No business backend or remote synchronization was identified. [Architecture details](docs/architecture.md)
+Telas React Native → helpers de domínio e Zustand → AsyncStorage. Expo Notifications reconcilia lembretes locais com requests do sistema operacional; APIs de arquivos permitem transferência manual por backup JSON. Não foi identificado backend de negócio ou sincronização remota. [Detalhes da arquitetura](docs/architecture.md)
 
-## Screen tour — sanitized web captures
+## Tour de telas — capturas web sanitizadas
 
-![Screen tour assembled from three sanitized web captures](assets/demo.gif)
+![Tour com três capturas reais sanitizadas do preview web](assets/demo.gif)
 
-This GIF is a slideshow of real captures, not an interaction recording or a native release demo. [Media provenance](assets/README.md)
+O GIF é um slideshow de capturas reais, não uma gravação de interação ou demonstração de release nativa. [Origem da mídia](assets/README.md)
 
-## Problem and product
+## Problema e produto
 
-Venue operators need to see availability, avoid overlapping reservations, manage weekly bookings and preserve their records when changing devices. The application addresses these workflows through a locally persisted agenda and manual JSON backup transfer. The operator audience is inferred from the implemented workflows; adoption and business impact have not been independently established. [E01, E02](docs/evidence.md)
+A operação precisa consultar disponibilidade, evitar sobreposição de reservas, administrar horários semanais e preservar registros na troca de aparelho. O aplicativo atende esses fluxos com agenda persistida localmente e transferência manual por backup JSON. O público operador é inferido pelos fluxos existentes; adoção e impacto comercial não foram verificados. [E01, E02](docs/evidence.md)
 
-Implemented features include date/week navigation, a monthly calendar, search and filters, booking creation and confirmation, weekly recurrence with per-date exclusions, booking details, local reminders, and backup import/export. There are configured iOS and Android targets and a web preview path. [E01, E03, E04](docs/evidence.md)
+Há navegação por data/semana, calendário mensal, busca e filtros, criação e confirmação de reservas, recorrência semanal com exclusões por data, detalhes, lembretes locais e importação/exportação de backup. iOS e Android são alvos configurados; existe também execução web. [E01, E03, E04](docs/evidence.md)
 
-## Three technical decisions
+## Três decisões técnicas
 
-- **Recurring availability:** explicit comparisons between one-off and weekly reservations avoid a fixed annual conflict-checking horizon and respect resource identity and excluded occurrences. [E03](docs/evidence.md)
-- **Reminder reconciliation:** application state is compared with pending operating-system notification requests; valid requests are reused, duplicates are cancelled, and effects are serialized. [E04](docs/evidence.md)
-- **Data evolution:** versioned backup import normalizes legacy records and removes device-specific notification metadata before rebuilding local reminders. [E05](docs/evidence.md)
+- **Disponibilidade recorrente:** comparação explícita entre reservas pontuais e semanais, sem horizonte anual fixo, considerando recurso e ocorrências excluídas. [E03](docs/evidence.md)
+- **Reconciliação de lembretes:** comparação entre estado persistido e requests pendentes no sistema operacional, com reaproveitamento, cancelamento de duplicados e serialização dos efeitos. [E04](docs/evidence.md)
+- **Evolução de dados:** importação versionada normaliza registros legados e remove metadados de notificações específicos do aparelho. [E05](docs/evidence.md)
 
-Hydration guards and explicit replacement confirmation also protect restoration from acting on its initial empty state. [E02, E05](docs/evidence.md)
+A restauração também bloqueia ações de backup antes da hidratação e exige confirmação explícita antes da substituição. [E02, E05](docs/evidence.md)
 
-## Technology stack
+## Stack aplicada
 
-| Area | Applied technologies |
+| Área | Tecnologias |
 | --- | --- |
-| Mobile foundation | React Native 0.86.3, React 19.2.3, Expo 57.0.26 |
-| Language and navigation | TypeScript 6.0.3; React Navigation native stack and bottom tabs |
-| State and persistence | Zustand 4.0.0; AsyncStorage 2.2.0 |
-| UI | styled-components, Expo Vector Icons, Safe Area Context, Size Matters |
-| Rules and validation | date-fns; Yup with additional domain validation |
-| Platform integrations | Expo Notifications, FileSystem, DocumentPicker, Sharing and Updates |
-| Quality and packaging | Node test runner through tsx, ESLint, Bun and EAS configuration |
+| Base mobile | React Native 0.86.3, React 19.2.3, Expo 57.0.26 |
+| Linguagem e navegação | TypeScript 6.0.3; React Navigation com native stack e bottom tabs |
+| Estado e persistência | Zustand 4.0.0; AsyncStorage 2.2.0 |
+| Interface | styled-components, Expo Vector Icons, Safe Area Context, Size Matters |
+| Regras e validação | date-fns; Yup e validação complementar de domínio |
+| Integrações de plataforma | Expo Notifications, FileSystem, DocumentPicker, Sharing e Updates |
+| Qualidade e empacotamento | Node test runner com tsx, ESLint, Bun e configuração EAS |
 
-Versions identify the inspected local installation, not proof of a successful native release. Reanimated is declared in the project but is not presented here as an implemented animation feature. No business API client or backend implementation was identified. [E00, E06, E08](docs/evidence.md)
+As versões correspondem à instalação local examinada e não comprovam release nativa. Reanimated está declarado, mas não é apresentado como funcionalidade de animação implementada. Não foi identificado cliente de API de negócio ou backend desenvolvido neste projeto. [E00, E06, E08](docs/evidence.md)
 
-## Architecture
+## Arquitetura
 
-![Conceptual architecture of the private application](assets/architecture.png)
+![Arquitetura conceitual da aplicação privada](assets/architecture.png)
 
-Screens call domain helpers and Zustand actions. Booking state is persisted through AsyncStorage. A notification adapter coordinates native effects through a testable reconciler. Backup import/export connects the local model to platform file APIs. This is a small modular application; the case study does not assign a framework label beyond what the implementation supports. [Architecture and boundaries](docs/architecture.md)
+As telas chamam helpers de domínio e ações Zustand. O AsyncStorage persiste as reservas. Um adaptador coordena os efeitos nativos de notificações por meio de um reconciliador testável. O backup conecta o modelo local às APIs de arquivos de cada plataforma. A descrição se limita às fronteiras efetivamente presentes. [Detalhamento da arquitetura](docs/architecture.md)
 
-## Technical challenges
+## Desafios técnicos
 
-The deeper case studies cover recurring conflict detection, reconciling native reminders, preserving legacy backups, ordering hydration and destructive restore operations, and adapting file workflows across platforms. Each explains the implementation, observable benefit and remaining limitation. [Read the five challenges](docs/technical-challenges.md)
+Os cinco estudos detalham detecção de conflitos recorrentes, consistência de lembretes nativos, compatibilidade de backups, hidratação e restauração destrutiva, além da adaptação dos fluxos de arquivos. Cada um apresenta implementação, benefício observável e limitações. [Ler os desafios](docs/technical-challenges.md)
 
-## Tests, quality and delivery
+## Testes, qualidade e entrega
 
-The repository review on **7 November 2026** executed **36 tests successfully** and completed TypeScript checking with exit code 0. The tests exercise rules, migrations, permissions and notification coordination using simulated operations; they do not prove native notification delivery. ESLint reported **44 errors and 443 warnings**. [E07](docs/evidence.md)
+Na revisão de **7 de novembro de 2026**, os **36 testes passaram** e a checagem TypeScript terminou com código 0. A suíte testa regras, migrações, permissões e coordenação de notificações com operações simuladas; não comprova entrega no aparelho. O ESLint apresentou **44 erros e 443 avisos**. [E07](docs/evidence.md)
 
-EAS profiles define internal development/preview distribution and an Android production APK target. Expo Updates is configured. Store publication, a current signed native build, executed CI and production OTA rollout were not verified. A web screenshot session also logged a React runtime error during navigation; its cause remains uninvestigated. [Testing scope and delivery evidence](docs/testing-and-delivery.md)
+Os perfis EAS configuram distribuição interna para development/preview e APK Android em production. Há configuração Expo Updates. Publicação nas lojas, build nativa assinada atual, execução de CI e rollout OTA não foram verificados. A captura web também registrou erro React durante uma navegação, com causa ainda não investigada. [Escopo dos testes e da entrega](docs/testing-and-delivery.md)
 
-## Screenshots and walkthrough
+## Imagens e demonstração
 
-These are real captures from an isolated, sanitized **web preview at 390 × 844 CSS pixels**, using fictitious teams. Branding, infrastructure identifiers and bundled real-looking backup data were removed from the preview copy. They are not screenshots of validated native releases. [Media provenance](assets/README.md)
+As capturas vieram de um **preview web isolado e sanitizado em 390 × 844 CSS pixels**, com equipes fictícias. Marca, identificadores de infraestrutura e backups potencialmente reais foram removidos da cópia de demonstração. As imagens não representam releases nativas validadas. [Origem das imagens](assets/README.md)
 
-| Agenda | Booking form | Backup |
+| Agenda | Formulário | Backup |
 | --- | --- | --- |
-| ![Agenda with fictitious teams](assets/screenshots/agenda.png) | ![Booking form with fictitious data](assets/screenshots/create.png) | ![Backup screen with synthetic record count](assets/screenshots/backup.png) |
+| ![Agenda com equipes fictícias](assets/screenshots/agenda.png) | ![Formulário com dados fictícios](assets/screenshots/create.png) | ![Backup com contagem sintética](assets/screenshots/backup.png) |
 
-[Open the animated screen walkthrough](assets/demo.gif). The GIF is a sequence of these captured screens, not a recording of an end-to-end transaction.
+[Abrir sequência animada das telas](assets/demo.gif). O GIF reúne essas capturas; não é gravação de uma transação ponta a ponta.
 
-## My contribution: evidence and boundaries
+## Minha contribuição: evidências e limites
 
-The reviewed private Git history attributes maintenance commits to **Gustavo** for SDK/dependency updates, backup workflows, scheduling rules, notification reconciliation, tests and project setup. These are Git-attributed changes, not a claim of exclusive authorship. Historical author aliases, exact personal responsibilities, collaboration and use of assistance tools still require confirmation. [Attribution record](docs/evidence.md#e09--attribution)
+O histórico Git privado atribui a **Gustavo** commits de manutenção envolvendo SDK/dependências, backup, regras de agenda, reconciliação de notificações, testes e configuração do projeto. Essa atribuição não comprova autoria exclusiva. A ligação entre aliases históricos, responsabilidades pessoais, colaboração e uso de ferramentas de assistência ainda depende de confirmação. [Registro de atribuição](docs/evidence.md#e09--attribution)
 
-## Private source and disclosure
+## Código privado e divulgação
 
-This repository contains documentation and sanitized media only. It includes no proprietary source code, business records, private endpoints, credentials, native packages or source maps. It is not an installable application. Publication of this documentation and its sanitized images was authorized with the original name withheld. [Disclosure scope](docs/disclosure.md)
+Este repositório contém documentação e mídia sanitizada. Não inclui código proprietário, registros de negócio, endpoints privados, credenciais, pacotes nativos ou source maps. Não é um aplicativo instalável. A publicação desta documentação e das imagens sanitizadas foi autorizada com omissão da marca original. [Escopo de divulgação](docs/disclosure.md)
 
-Connect with Gustavo on [LinkedIn](https://www.linkedin.com/in/gustavo-santana-83ba611a6/).
+Conheça o perfil de Gustavo no [LinkedIn](https://www.linkedin.com/in/gustavo-santana-83ba611a6/).
