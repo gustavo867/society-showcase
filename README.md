@@ -4,7 +4,7 @@
 
 **Gestão de reservas para society com React Native, Expo e TypeScript.**
 
-[English](README.en.md) · [Minhas contribuições](#minhas-contribuições) · [Arquitetura](#arquitetura) · [LinkedIn](https://www.linkedin.com/in/gustavo-santana-83ba611a6/)
+[English](README.en.md) · [Desenvolvimento com IA](#desenvolvimento-assistido-por-ia) · [Arquitetura](#arquitetura) · [LinkedIn](https://www.linkedin.com/in/gustavo-santana-83ba611a6/)
 
 Uma agenda para consultar horários, administrar reservas semanais e acompanhar confirmações. O aplicativo combina persistência local, lembretes no aparelho e backup de dados — com atenção a conflitos de horários, compatibilidade entre versões e consistência entre o estado da aplicação e o sistema operacional.
 
@@ -32,17 +32,17 @@ Capturas em 390 × 844 CSS pixels. [Origem e escopo das imagens](assets/README.m
 - **Confirmação e lembretes:** acompanhamento do status da reserva e coordenação de notificações locais.
 - **Backup e restauração:** exportação/importação JSON, compatibilidade com formatos legados e confirmação antes de substituir os dados.
 
-## Minhas contribuições
+## Desenvolvimento assistido por IA
 
-Contribuições de manutenção atribuídas a **Gustavo** no histórico do projeto:
+Desenvolvi este aplicativo com auxílio do **Codex**, em um fluxo de trabalho pensado para o desenvolvimento com agentes de IA.
 
-- **Atualização de SDK e dependências**, incluindo configurações Expo/React Native.
-- **Evolução do backup e da restauração**, com importação/exportação e tratamento de formatos legados.
-- **Correções nas regras de agenda**, incluindo conflitos recorrentes e limites de horários.
-- **Reconciliação de notificações**, com serialização de operações e tratamento de requests ausentes ou duplicados.
-- **Testes automatizados** para regras de agenda, backups e coordenação de notificações.
+A documentação do projeto orienta os agentes sobre o contexto da aplicação e a estrutura que devem seguir. Ela faz parte do processo de desenvolvimento:
 
-O desenvolvimento contou com **assistência do Codex**. O [registro de contribuições](docs/evidence.md#e09--attribution) detalha as evidências e o escopo de atribuição, sem atribuir autoria exclusiva do aplicativo.
+- **Contexto compartilhado:** documentar o funcionamento e as decisões do projeto para orientar cada tarefa.
+- **Estrutura como referência:** guiar as alterações pela organização existente da aplicação.
+- **Continuidade entre tarefas:** manter orientações documentadas para os agentes seguirem o mesmo padrão ao evoluir o código.
+
+Esse fluxo mantém o uso do Codex integrado ao contexto e à estrutura do projeto. [Registro de autoria e processo](docs/evidence.md#e09--attribution).
 
 ## Arquitetura
 

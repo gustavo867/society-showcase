@@ -4,7 +4,7 @@
 
 This case study was prepared from private source at revision `404d8ca` on **7 November 2026**. References below name private artifacts without reproducing their contents or linking to private infrastructure. Readers cannot inspect the private implementation through this documentation repository. Executed checks are point-in-time observations, not ongoing CI badges.
 
-**Verified** means directly supported by the inspected repository or a recorded command/session result. **Inferred** means an interpretation. **Not identified** means evidence was insufficient in the reviewed surface. **Requires confirmation** means an external fact or personal attribution remains unresolved.
+**Verified** means directly supported by the inspected repository or a recorded command/session result. **Inferred** means an interpretation. **Not identified** means evidence was insufficient in the reviewed surface. **Owner-confirmed** means information explicitly supplied by the project owner. **Requires confirmation** means an external fact or personal attribution remains unresolved.
 
 ## E00 — Technology versions
 
@@ -44,13 +44,11 @@ This case study was prepared from private source at revision `404d8ca` on **7 No
 
 ## E09 — Attribution
 
-**Verified Git metadata:** the reviewed HEAD history contains 28 commits. Sixteen use the author name Gustavo; twelve use another historical alias. Additional local tool checkpoints are not counted as human feature deliveries.
+**Owner-confirmed:** Gustavo developed the application in full, with Codex assisting development. The project uses a workflow designed for AI-agent collaboration, with documentation that provides context and guides agents to follow the project's structure. These authorship and workflow statements reflect the owner's explicit confirmation; they are not inferred solely from commit metadata. Codex use is confirmed without asserting exclusive use of a particular assistance tool.
 
-Maintenance diffs under Gustavo include `a84b2e3` (SDK/config updates), `ea2fd20` (backup workflow), `d705b88` (rules, reconciliation and tests), `dab1bdd` (slot-boundary correction) and `d15ab7c` (backup/project setup evolution). Earlier application/recurrence/notification implementation appears under the historical alias. Names, commit attribution and branch/tool references do not establish sole intellectual ownership. Private planning documents show an agent-assisted workflow and external visual references; the exact division of work remains unknown.
+**Verified Git metadata:** the reviewed HEAD history contains 28 commits. Sixteen use the author name Gustavo; twelve use another historical alias. Additional local tool checkpoints are not counted as feature deliveries. Maintenance diffs under Gustavo include `a84b2e3` (SDK/config updates), `ea2fd20` (backup workflow), `d705b88` (rules, reconciliation and tests), `dab1bdd` (slot-boundary correction) and `d15ab7c` (backup/project setup evolution). Earlier application/recurrence/notification implementation appears under the historical alias. Private planning documents also show an agent-assisted workflow.
 
-**Owner-confirmed:** Codex was used to assist development. This confirmation does not establish exclusive use of Codex or the allocation of individual implementation tasks between people and agents.
-
-**Requires confirmation:** identity mapping, professional name, actual dates/responsibilities, collaborators, other assistance tools and ownership of earlier implementation/design. This register does not attribute the entire project to the portfolio owner.
+Git author names are metadata rather than a complete authorship record. The owner's confirmation supplies the authorship context that the initial review could not establish from Git alone. It does not change the separate scope of third-party visual assets described in [media provenance](../assets/README.md).
 
 ## E10 — Performance scope
 

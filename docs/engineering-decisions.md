@@ -2,7 +2,7 @@
 
 [English overview](../README.en.md) · [Visão geral em português](../README.md)
 
-These notes reconstruct decisions from the implementation and its private planning documents. They are not historical ADRs and do not imply the portfolio owner personally made every decision. “Observed” identifies repository evidence; “Interpretation” identifies an inferred rationale.
+These notes reconstruct decisions from the implementation and its private planning documents. They are not historical ADRs; the rationale below distinguishes implementation evidence from retrospective interpretation. “Observed” identifies repository evidence; “Interpretation” identifies an inferred rationale.
 
 ## 1. Keep the booking workflow local
 

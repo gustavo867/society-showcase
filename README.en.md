@@ -4,7 +4,7 @@
 
 **Booking management for a small-sided football venue, built with React Native, Expo and TypeScript.**
 
-[Português](README.md) · [My contributions](#my-contributions) · [Architecture](#architecture) · [LinkedIn](https://www.linkedin.com/in/gustavo-santana-83ba611a6/)
+[Português](README.md) · [AI-assisted development](#ai-assisted-development) · [Architecture](#architecture) · [LinkedIn](https://www.linkedin.com/in/gustavo-santana-83ba611a6/)
 
 An agenda for checking availability, managing weekly bookings and tracking confirmations. The app combines local persistence, on-device reminders and data backups, addressing scheduling conflicts, compatibility across data versions and consistency between application state and the operating system.
 
@@ -32,17 +32,17 @@ Captured at 390 × 844 CSS pixels. [Media provenance and scope](assets/README.md
 - **Confirmation and reminders:** booking status tracking and local notification coordination.
 - **Backup and restoration:** JSON import/export, legacy-format compatibility and confirmation before replacing data.
 
-## My contributions
+## AI-assisted development
 
-Maintenance contributions attributed to **Gustavo** in the project history:
+I developed this application with assistance from **Codex**, using a workflow designed for development with AI agents.
 
-- **SDK and dependency updates**, including Expo/React Native configuration.
-- **Backup and restoration improvements**, including import/export and legacy-format handling.
-- **Scheduling rule fixes**, including recurring conflicts and booking interval boundaries.
-- **Notification reconciliation**, with operation serialization and handling of missing or duplicate requests.
-- **Automated tests** for scheduling rules, backups and notification coordination.
+Project documentation gives agents the application context and the structure they should follow. It is part of the development process:
 
-Development was **assisted by Codex**. The [contribution record](docs/evidence.md#e09--attribution) details the evidence and attribution scope without claiming sole authorship of the application.
+- **Shared context:** document application behavior and project decisions to guide each task.
+- **Structure as a reference:** guide changes through the application's existing organization.
+- **Continuity across tasks:** maintain documented guidance so agents follow the same patterns as the code evolves.
+
+This workflow integrates Codex assistance with the project's context and structure. [Authorship and process record](docs/evidence.md#e09--attribution).
 
 ## Architecture
 
